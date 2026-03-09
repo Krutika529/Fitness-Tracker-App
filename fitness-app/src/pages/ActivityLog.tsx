@@ -1,7 +1,5 @@
-import React from "react";
-
 const ActivityLog = () => {
-  return <div></div>;
+  return <div>Activity</div>;
 };
 
 export default ActivityLog;

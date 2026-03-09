@@ -1,7 +1,5 @@
-import React from "react";
-
 const FoodLog = () => {
-  return <div></div>;
+  return <div>Food</div>;
 };
 
 export default FoodLog;
