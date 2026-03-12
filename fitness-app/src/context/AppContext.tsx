@@ -4,6 +4,7 @@ import {
   type ActivityEntry,
   type Credentials,
   type FoodEntry,
+  type User,
 } from "../types";
 import { useNavigate } from "react-router-dom";
 import mockApi from "../assets/mockApi";
@@ -27,7 +28,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem("token", data.jwt);
   };
 
-  const Login = async (credentials: Credentials) => {
+  const login = async (credentials: Credentials) => {
     const { data } = await mockApi.auth.login(credentials);
     setUser({ ...data.user, token: data.jwt });
     if (data?.user?.age && data?.user?.weight && data?.user?.goal) {
@@ -36,36 +37,59 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem("token", data.jwt);
   };
 
-  const fetchUser = async (token:string) => {
-    const {data} = await mockApi.user.me()
+  const fetchUser = async (token: string) => {
+    const { data } = await mockApi.user.me();
     setUser({ ...data.user, token: data.jwt });
     if (data?.user?.age && data?.user?.weight && data?.user?.goal) {
-      setIsUserFetched(true);
-  }
+      setOnboardingCompleted(true);
+    }
+    setIsUserFetched(true);
+  };
 
   const fetchFoodLogs = async () => {
-    const {data} =  await mockApi.foodLogs.list();
-    setAllFoodLogs(data)
-  }
+    const { data } = await mockApi.foodLogs.list();
+    setAllFoodLogs(data);
+  };
 
   const fetchActivityLogs = async () => {
-    const {data} =  await mockApi.activityLogs.list();
-    setAllActivityLogs(data)
-  }
+    const { data } = await mockApi.activityLogs.list();
+    setAllActivityLogs(data);
+  };
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+    setOnboardingCompleted(false);
+    navigate("/");
+  };
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    if(token) {
-        (async () => {
-            await fetchUser(token)
-            await fetchFoodLogs()
-            await fetchActivityLogs()
-        })();
-    }else{
-        setIsUserFetched(true)
+    const token = localStorage.getItem("token");
+    if (token) {
+      (async () => {
+        await fetchUser(token);
+        await fetchFoodLogs();
+        await fetchActivityLogs();
+      })();
+    } else {
+      setIsUserFetched(true);
     }
-  })
-  const value = {};
+  }, []);
+
+  const value = {
+    user,
+    setUser,
+    isUserFetched,
+    fetchUser,
+    signup,
+    logout,
+    login,
+    onboardingCompleted,
+    setOnboardingCompleted,
+    allActivityLogs,
+    allFoodLogs,
+    setAllActivityLogs,
+    setAllFoodLogs,
+  };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 

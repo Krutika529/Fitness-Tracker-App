@@ -5,9 +5,22 @@ import FoodLog from "./pages/FoodLog";
 
 import { Route, Routes } from "react-router-dom";
 import Profile from "./pages/Profile";
-import Layout from "./pages/layout";
+import Layout from "./pages/Layout";
+import { useAppContext } from "./context/AppContext";
+import Login from "./pages/Login";
+import Loading from "./components/Loading";
+import OnBoarding from "./pages/OnBoarding";
 
 const App = () => {
+  const { user, isUserFetched, onboardingCompleted } = useAppContext();
+
+  if (!user) {
+    return isUserFetched ? <Login /> : <Loading />;
+  }
+
+  if (!onboardingCompleted) {
+    return <OnBoarding />;
+  }
   return (
     <Routes>
       <Route path="/" element={<Layout />}>

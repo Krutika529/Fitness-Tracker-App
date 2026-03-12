@@ -19,15 +19,19 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   // Update theme when state changes
   useEffect(() => {
     const root = window.document.documentElement;
-    root.classList.remove('light', 'dark');
+    root.classList.remove("light", "dark");
     root.classList.add(theme);
-    localStorage.setItem('theme', theme)
-  },[theme])
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
-  const toggleTheme = () {
-    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'))
-  }
-  return <ThemeContext.Provider value={{theme, toggleTheme}}>{children}</ThemeContext.Provider>;
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
 }
 
 export function useTheme() {

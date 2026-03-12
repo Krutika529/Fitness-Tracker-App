@@ -1,12 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap");
-@import "tailwindcss";
-@variant dark (&:where(.dark, .dark *));
+@import url("https://fonts.googleapis.com/css2?family=Rethink+Sans:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   font-family: "Rethink Sans", sans-serif;
 }
 
 body {
-  @apply dark:bg-slate-950;
+  @apply dark:bg-slate-950 dark:text-white;
 }
 
 /* Shared Page Styles */
@@ -45,7 +48,7 @@ body {
 
 /* Dashboard Page */
 .dashboard-header {
-  @apply bg-linear-to-br from-emerald-500 to-emerald-600 text-white p-6 pt-12 pb-20 rounded-b-3xl;
+  @apply bg-gradient-to-br from-emerald-500 to-emerald-600 text-white p-6 pt-12 pb-20 rounded-b-3xl;
 }
 
 .dashboard-grid {
@@ -77,7 +80,7 @@ body {
 
 /* Onboarding Page */
 .onboarding-container {
-  @apply min-h-screen bg-linear-to-b from-emerald-50 to-white dark:from-slate-900 dark:to-slate-950 flex flex-col transition-colors duration-200;
+  @apply min-h-screen bg-gradient-to-br from-emerald-50 to-white dark:from-slate-900 dark:to-slate-950 flex flex-col transition-colors duration-200;
 }
 
 .onboarding-wrapper {
