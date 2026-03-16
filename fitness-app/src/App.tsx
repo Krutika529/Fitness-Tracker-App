@@ -10,6 +10,7 @@ import { useAppContext } from "./context/AppContext";
 import Login from "./pages/Login";
 import Loading from "./components/Loading";
 import OnBoarding from "./pages/OnBoarding";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const { user, isUserFetched, onboardingCompleted } = useAppContext();
@@ -22,14 +23,17 @@ const App = () => {
     return <OnBoarding />;
   }
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="food" element={<FoodLog />} />
-        <Route path="activity" element={<ActivityLog />} />
-        <Route path="profile" element={<Profile />} />
-      </Route>
-    </Routes>
+    <>
+      <Toaster />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="food" element={<FoodLog />} />
+          <Route path="activity" element={<ActivityLog />} />
+          <Route path="profile" element={<Profile />} />
+        </Route>
+      </Routes>
+    </>
   );
 };
 
